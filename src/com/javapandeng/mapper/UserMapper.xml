@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.javapandeng.mapper.UserMapper">
+    <resultMap id="UserResultMap" type="com.javapandeng.po.User">
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+
+        <result column="realName" property="realName" jdbcType="VARCHAR"/>
+        <result column="sex" property="sex" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--Mapper層的方法-->
+
+    <!--新增-->
+    <insert id="insert" parameterType="com.javapandeng.po.User" useGeneratedKeys="true" keyProperty="id">
+        insert into user(id,username,password,phone,realName,sex,address,email) values
+        (#{id},#{username},#{password},#{phone},#{realName},#{sex},#{address},#{email})
+    </insert>
+
+    <!--批量新增-->
+    <select id="insertBatch" parameterType="java.util.List">
+        insert into user(id,username,password,phone,realName,sex,address,email) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.username},#{item.password},#{item.phone},#{item.realName},#{item.sex},#{item.address},#{item.email})
+        </foreach>
+    </select>
+
+    <!--根據id刪除-->
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from user where id=#{id}
+    </delete>
+
+    <!--根據實體類刪除-->
+    <delete id="deleteByEntity" parameterType="com.javapandeng.po.User">
+        delete from user
+        <where>
+            <if test="id != null">
+                id=#{id}
+            </if>
+
+            <if test="username != null and username != ''">
+                and username=#{username}
+            </if>
+
+            <if test="password != null and password != ''">
+                and password=#{password}
+            </if>
+
+            <if test="phone != null and phone != ''">
+                and phone=#{phone}
+            </if>
+
+            <if test="realName != null and realName != ''">
+                and realName=#{realName}
+            </if>
+
+            <if test="sex != null and sex != ''">
+                and sex=#{sex}
+            </if>
+
+            <if test="address != null and address != ''">
+                and address=#{address}
+            </if>
+
+            <if test="email != null and email != ''">
+                and email=#{email}
+            </if>
+        </where>
+    </delete>
+
+    <!--根據Map刪除-->
+    <delete id="deleteByMap" parameterType="java.util.HashMap">
+        delete from user
+        <where>
+            <if test="id != null">
+                id=#{id}
+            </if>
+
+            <if test="username != null and username != ''">
+                and username=#{username}
+            </if>
+
+            <if test="password != null and password != ''">
+                and password=#{password}
+            </if>
+
+            <if test="phone != null and phone != ''">
+                and phone=#{phone}
+            </if>
+
+            <if test="realName != null and realName != ''">
+                and realName=#{realName}
+            </if>
+
+            <if test="sex != null and sex != ''">
+                and sex=#{sex}
+            </if>
+
+            <if test="address != null and address != ''">
+                and address=#{address}
+            </if>
+
+            <if test="email != null and email != ''">
+                and email=#{email}
+            </if>
+        </where>
+    </delete>
+
+    <!--根據實體類修改-->
+    <update id="update" parameterType="com.javapandeng.po.User">
+        update user
+        <set>
+            <if test="username != null and username != ''">
+                username=#{username},
+            </if>
+
+            <if test="password != null and password != ''">
+                password=#{password},
+            </if>
+
+            <if test="phone != null and phone != ''">
+                phone=#{phone},
+            </if>
+
+            <if test="realName != null and realName != ''">
+                realName=#{realName},
+            </if>
+
+            <if test="sex != null and sex != ''">
+                sex=#{sex},
+            </if>
+
+            <if test="address != null and address != ''">
+                address=#{address},
+            </if>
+
+            <if test="email != null and email != ''">
+                email=#{email}
+            </if>
+        </set>
+        <where>
+            <if test="id != null">
+                id=#{id}
+            </if>
+
+            <if test="username != null and username != ''">
+                and username=#{username}
+            </if>
+
+            <if test="password != null and password != ''">
+                and password=#{password}
+            </if>
+
+            <if test="phone != null and phone != ''">
+                and phone=#{phone}
+            </if>
+
+            <if test="realName != null and realName != ''">
+                and realName=#{realName}
+            </if>
+
+            <if test="sex != null and sex != ''">
+                and sex=#{sex}
+            </if>
+
+            <if test="address != null and address != ''">
+                and address=#{address}
+            </if>
+
+            <if test="email != null and email != ''">
+                and email=#{email}
+            </if>
+        </where>
+    </update>
+
+    <!--根據id修改-->
+    <update id="updateById" parameterType="com.javapandeng.po.User">
+        update user
+        <set>
+            <if test="username != null and username != ''">
+                username=#{username},
+            </if>
+
+            <if test="password != null and password != ''">
+                password=#{password},
+            </if>
+
+            <if test="phone != null and phone != ''">
+                phone=#{phone},
+            </if>
+
+            <if test="realName != null and realName != ''">
+                realName=#{realName},
+            </if>
+
+            <if test="sex != null and sex != ''">
+                sex=#{sex},
+            </if>
+
+            <if test="address != null and address != ''">
+                address=#{address},
+            </if>
+
+            <if test="email != null and email != ''">
+                email=#{email}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+    
+    <!--批量修改-->
+    <update id="updateBatch" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";" index="index">
+            update user
+            <set>
+                <if test="item.username != null and item.username != ''">
+                    username=#{item.username},
+                </if>
+
+                <if test="item.password != null and item.password != ''">
+                    password=#{item.password},
+                </if>
+
+                <if test="item.phone != null and item.phone != ''">
+                    phone=#{item.phone},
+                </if>
+
+                <if test="item.realName != null and item.realName != ''">
+                    realName=#{item.realName},
+                </if>
+
+                <if test="item.sex != null and item.sex != ''">
+                    sex=#{item.sex},
+                </if>
+
+                <if test="item.address != null and item.address != ''">
+                    address=#{item.address},
+                </if>
+
+                <if test="item.email != null and item.email != ''">
+                    email=#{item.email}
+                </if>
+            </set>
+            where id=#{item.id}
+        </foreach>
+    </update>
+
+    <!--根據Map查詢-->
+    <select id="listByMap" parameterType="map" resultMap="UserResultMap">
+        select * from user
+        <where>
+            <if test="id != null">
+                id=#{id}
+            </if>
+
+            <if test="username != null and username != ''">
+                and username=#{username}
+            </if>
+
+            <if test="password != null and password != ''">
+                and password=#{password}
+            </if>
+
+            <if test="phone != null and phone != ''">
+                and phone=#{phone}
+            </if>
+
+            <if test="realName != null and realName != ''">
+                and realName=#{realName}
+            </if>
+
+            <if test="sex != null and sex != ''">
+                and sex=#{sex}
+            </if>
+
+            <if test="address != null and address != ''">
+                and address=#{address}
+            </if>
+
+            <if test="email != null and email != ''">
+                and email=#{email}
+            </if>
+        </where>
+    </select>
+
+    <!--查詢全部-->
+    <select id="listAll" resultMap="UserResultMap">
+        select * from user
+    </select>
+
+    <!--查詢(根據屬性值為判斷條件)-->
+    <select id="listAllByEntity" parameterType="com.javapandeng.po.User" resultMap="UserResultMap">
+        select * from user
+        <where>
+            <if test="id != null">
+                id=#{id}
+            </if>
+
+            <if test="username != null and username != ''">
+                and username=#{username}
+            </if>
+
+            <if test="password != null and password != ''">
+                and password=#{password}
+            </if>
+
+            <if test="phone != null and phone != ''">
+                and phone=#{phone}
+            </if>
+
+            <if test="realName != null and realName != ''">
+                and realName=#{realName}
+            </if>
+
+            <if test="sex != null and sex != ''">
+                and sex=#{sex}
+            </if>
+
+            <if test="address != null and address != ''">
+                and address=#{address}
+            </if>
+
+            <if test="email != null and email != ''">
+                and email=#{email}
+            </if>
+        </where>
+    </select>
+
+    <!--根據id獲取一個實體-->
+    <select id="getById" resultMap="UserResultMap" parameterType="java.lang.Integer">
+        select * from user where id=#{id}
+    </select>
+
+    <!--根據實體類查詢-->
+    <select id="getByEntity" parameterType="com.javapandeng.po.User" resultMap="UserResultMap">
+        select * from user
+        <where>
+            <if test="id != null">
+                id=#{id}
+            </if>
+
+            <if test="username != null and username != ''">
+                and username=#{username}
+            </if>
+
+            <if test="password != null and password != ''">
+                and password=#{password}
+            </if>
+
+            <if test="phone != null and phone != ''">
+                and phone=#{phone}
+            </if>
+
+            <if test="realName != null and realName != ''">
+                and realName=#{realName}
+            </if>
+
+            <if test="sex != null and sex != ''">
+                and sex=#{sex}
+            </if>
+
+            <if test="address != null and address != ''">
+                and address=#{address}
+            </if>
+
+            <if test="email != null and email != ''">
+                and email=#{email}
+            </if>
+        </where>
+    </select>
+
+    <!--以下為封裝純SQL語法-->
+
+    <!--查詢一個對象返回Map-->
+    <select id="getBySqlReturnMap" resultType="map">
+        ${sql}
+    </select>
+
+    <!--查詢一個對象返回實體類-->
+    <select id="getBySqlReturnEntity" resultMap="UserResultMap">
+        ${sql}
+    </select>
+
+    <!--查詢對象返回Map列表-->
+    <select id="listBySqlReturnMap" resultType="map">
+        ${sql}
+    </select>
+
+    <!--查詢對象返回實體列表-->
+    <select id="listBySqlReturnEntity" resultMap="UserResultMap">
+        ${sql}
+    </select>
+
+    <!--查詢分頁-->
+    <select id="findBySqlReturnEntity" resultMap="UserResultMap">
+        ${sql}
+    </select>
+
+    <!--通過SQL修改-->
+    <update id="updateBySql">
+        ${sql}
+    </update>
+
+    <!--通過SQL刪除-->
+    <delete id="deleteBySql">
+        ${sql}
+    </delete>
+
+    <!--Service層特有的方法-->
+
+    <!--通過Map查詢分頁-->
+    <select id="findByMap" parameterType="map" resultMap="UserResultMap">
+        select * from user
+        <where>
+            <if test="id != null">
+                id=#{id}
+            </if>
+
+            <if test="username != null and username != ''">
+                and username=#{username}
+            </if>
+
+            <if test="password != null and password != ''">
+                and password=#{password}
+            </if>
+
+            <if test="phone != null and phone != ''">
+                and phone=#{phone}
+            </if>
+
+            <if test="realName != null and realName != ''">
+                and realName=#{realName}
+            </if>
+
+            <if test="sex != null and sex != ''">
+                and sex=#{sex}
+            </if>
+
+            <if test="address != null and address != ''">
+                and address=#{address}
+            </if>
+
+            <if test="email != null and email != ''">
+                and email=#{email}
+            </if>
+        </where>
+    </select>
+
+    <!--通過對象查詢分頁-->
+    <select id="findByEntity" parameterType="com.javapandeng.po.User" resultMap="UserResultMap">
+        select * from user
+        <where>
+            <if test="id != null">
+                id=#{id}
+            </if>
+
+            <if test="username != null and username != ''">
+                and username=#{username}
+            </if>
+
+            <if test="password != null and password != ''">
+                and password=#{password}
+            </if>
+
+            <if test="phone != null and phone != ''">
+                and phone=#{phone}
+            </if>
+
+            <if test="realName != null and realName != ''">
+                and realName=#{realName}
+            </if>
+
+            <if test="sex != null and sex != ''">
+                and sex=#{sex}
+            </if>
+
+            <if test="address != null and address != ''">
+                and address=#{address}
+            </if>
+
+            <if test="email != null and email != ''">
+                and email=#{email}
+            </if>
+        </where>
+    </select>
+</mapper>

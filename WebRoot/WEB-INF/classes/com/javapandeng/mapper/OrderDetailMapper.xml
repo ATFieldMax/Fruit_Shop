@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.javapandeng.mapper.OrderDetailMapper">
+    <resultMap id="OrderDetailResultMap" type="com.javapandeng.po.OrderDetail">
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="item_id" property="itemId" jdbcType="INTEGER"/>
+        <result column="order_id" property="orderId" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="num" property="num" jdbcType="INTEGER"/>
+        <result column="total" property="total" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--Mapper層的方法-->
+
+    <!--新增-->
+    <insert id="insert" parameterType="com.javapandeng.po.OrderDetail" useGeneratedKeys="true" keyProperty="id">
+        insert into order_detail(id,item_id,order_id,status,num,total) values(#{id},#{itemId},#{orderId},#{status},#{num},#{total})
+    </insert>
+
+    <!--批量新增-->
+    <!--insert id="insertBatch" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator="," index="index">
+            insert into order_detail(item_id,order_id,status,num,total) values
+            (#{item.itemId},#{item.orderId},#{item.status},#{item.num},#{item.total})
+        </foreach>
+    </insert-->
+    <select id="insertBatch" parameterType="java.util.List">
+        insert into order_detail(id,item_id,order_id,status,num,total) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.itemId},#{item.orderId},#{item.status},#{item.num},#{item.total})
+        </foreach>
+    </select>
+
+    <!--根據id刪除-->
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from order_detail where id=#{id}
+    </delete>
+
+    <!--根據實體類刪除-->
+    <delete id="deleteByEntity" parameterType="com.javapandeng.po.OrderDetail">
+        delete from order_detail
+        <where>
+            <if test="id != null">
+                id=#{id}
+            </if>
+
+            <if test="itemId != null">
+                and item_id=#{itemId}
+            </if>
+
+            <if test="orderId != null">
+                and order_id=#{orderId}
+            </if>
+
+            <if test="status != null">
+                and status=#{status}
+            </if>
+
+            <if test="num != null">
+                and num=#{num}
+            </if>
+
+            <if test="total != null and total != ''">
+                and total=#{total}
+            </if>
+        </where>
+    </delete>
+
+    <!--根據Map刪除-->
+    <delete id="deleteByMap" parameterType="java.util.HashMap">
+        delete from order_detail
+        <where>
+            <if test="id != null">
+                id=#{id}
+            </if>
+
+            <if test="itemId != null">
+                and item_id=#{itemId}
+            </if>
+
+            <if test="orderId != null">
+                and order_id=#{orderId}
+            </if>
+
+            <if test="status != null">
+                and status=#{status}
+            </if>
+
+            <if test="num != null">
+                and num=#{num}
+            </if>
+
+            <if test="total != null and total != ''">
+                and total=#{total}
+            </if>
+        </where>
+    </delete>
+
+    <!--根據實體類修改-->
+    <update id="update" parameterType="com.javapandeng.po.OrderDetail">
+        update order_detail
+        <set>
+            <if test="itemId != null">
+                item_id=#{itemId},
+            </if>
+
+            <if test="orderId != null">
+                order_id=#{orderId},
+            </if>
+
+            <if test="status != null">
+                status=#{status},
+            </if>
+
+            <if test="num != null">
+                num=#{num},
+            </if>
+
+            <if test="total != null and total != ''">
+                total=#{total}
+            </if>
+        </set>
+        <where>
+            <if test="id != null">
+                id=#{id}
+            </if>
+
+            <if test="itemId != null">
+                and item_id=#{itemId}
+            </if>
+
+            <if test="orderId != null">
+                and order_id=#{orderId}
+            </if>
+
+            <if test="status != null">
+                and status=#{status}
+            </if>
+
+            <if test="num != null">
+                and num=#{num}
+            </if>
+
+            <if test="total != null and total != ''">
+                and total=#{total}
+            </if>
+        </where>
+    </update>
+
+    <!--根據id修改-->
+    <update id="updateById" parameterType="com.javapandeng.po.OrderDetail">
+        update order_detail
+        <set>
+            <if test="itemId != null">
+                item_id=#{itemId},
+            </if>
+
+            <if test="orderId != null">
+                order_id=#{orderId},
+            </if>
+
+            <if test="status != null">
+                status=#{status},
+            </if>
+
+            <if test="num != null">
+                num=#{num},
+            </if>
+
+            <if test="total != null and total != ''">
+                total=#{total}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+    
+    <!--批量修改-->
+    <update id="updateBatch" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";" index="index">
+            update order_detail
+            <set>
+                <if test="item.itemId != null">
+                    item_id=#{item.itemId},
+                </if>
+
+                <if test="item.orderId != null">
+                    order_id=#{item.orderId},
+                </if>
+
+                <if test="item.status != null">
+                    status=#{item.status},
+                </if>
+
+                <if test="item.num != null">
+                    num=#{item.num},
+                </if>
+
+                <if test="total != null and total != ''">
+                    total=#{item.total}
+                </if>
+            </set>
+            where id=#{item.id}
+        </foreach>
+    </update>
+
+    <!--根據Map查詢-->
+    <select id="listByMap" parameterType="map" resultMap="OrderDetailResultMap">
+        select * from order_detail
+        <where>
+            <if test="id != null">
+                id=#{id}
+            </if>
+
+            <if test="itemId != null">
+                and item_id=#{itemId}
+            </if>
+
+            <if test="orderId != null">
+                and order_id=#{orderId}
+            </if>
+
+            <if test="status != null">
+                and status=#{status}
+            </if>
+
+            <if test="num != null">
+                and num=#{num}
+            </if>
+
+            <if test="total != null and total != ''">
+                and total=#{total}
+            </if>
+        </where>
+    </select>
+
+    <!--查詢全部-->
+    <select id="listAll" resultMap="OrderDetailResultMap">
+        select * from order_detail
+    </select>
+
+    <!--查詢(根據屬性值為判斷條件)-->
+    <select id="listAllByEntity" parameterType="com.javapandeng.po.OrderDetail" resultMap="OrderDetailResultMap">
+        select * from order_detail
+        <where>
+            <if test="id != null">
+                id=#{id}
+            </if>
+
+            <if test="itemId != null">
+                and item_id=#{itemId}
+            </if>
+
+            <if test="orderId != null">
+                and order_id=#{orderId}
+            </if>
+
+            <if test="status != null">
+                and status=#{status}
+            </if>
+
+            <if test="num != null">
+                and num=#{num}
+            </if>
+
+            <if test="total != null and total != ''">
+                and total=#{total}
+            </if>
+        </where>
+    </select>
+
+    <!--根據id獲取一個實體-->
+    <select id="getById" resultMap="OrderDetailResultMap" parameterType="java.lang.Integer">
+        select * from order_detail where id=#{id}
+    </select>
+
+    <!--根據實體類查詢-->
+    <select id="getByEntity" parameterType="com.javapandeng.po.OrderDetail" resultMap="OrderDetailResultMap">
+        select * from order_detail
+        <where>
+            <if test="id != null">
+                id=#{id}
+            </if>
+
+            <if test="itemId != null">
+                and item_id=#{itemId}
+            </if>
+
+            <if test="orderId != null">
+                and order_id=#{orderId}
+            </if>
+
+            <if test="status != null">
+                and status=#{status}
+            </if>
+
+            <if test="num != null">
+                and num=#{num}
+            </if>
+
+            <if test="total != null and total != ''">
+                and total=#{total}
+            </if>
+        </where>
+    </select>
+
+    <!--以下為封裝純SQL語法-->
+
+    <!--查詢一個對象返回Map-->
+    <select id="getBySqlReturnMap" resultType="map">
+        ${sql}
+    </select>
+
+    <!--查詢一個對象返回實體類-->
+    <select id="getBySqlReturnEntity" resultMap="OrderDetailResultMap">
+        ${sql}
+    </select>
+
+    <!--查詢對象返回Map列表-->
+    <select id="listBySqlReturnMap" resultType="map">
+        ${sql}
+    </select>
+
+    <!--查詢對象返回實體列表-->
+    <select id="listBySqlReturnEntity" resultMap="OrderDetailResultMap">
+        ${sql}
+    </select>
+
+    <!--查詢分頁-->
+    <select id="findBySqlReturnEntity" resultMap="OrderDetailResultMap">
+        ${sql}
+    </select>
+
+    <!--通過SQL修改-->
+    <update id="updateBySql">
+        ${sql}
+    </update>
+
+    <!--通過SQL刪除-->
+    <delete id="deleteBySql">
+        ${sql}
+    </delete>
+
+    <!--Service層特有的方法-->
+
+    <!--通過Map查詢分頁-->
+    <select id="findByMap" parameterType="map" resultMap="OrderDetailResultMap">
+        select * from order_detail
+        <where>
+            <if test="id != null">
+                id=#{id}
+            </if>
+
+            <if test="itemId != null">
+                and item_id=#{itemId}
+            </if>
+
+            <if test="orderId != null">
+                and order_id=#{orderId}
+            </if>
+
+            <if test="status != null">
+                and status=#{status}
+            </if>
+
+            <if test="num != null">
+                and num=#{num}
+            </if>
+
+            <if test="total != null and total != ''">
+                and total=#{total}
+            </if>
+        </where>
+    </select>
+
+    <!--通過對象查詢分頁-->
+    <select id="findByEntity" parameterType="com.javapandeng.po.OrderDetail" resultMap="OrderDetailResultMap">
+        select * from order_detail
+        <where>
+            <if test="id != null">
+                id=#{id}
+            </if>
+
+            <if test="itemId != null">
+                and item_id=#{itemId}
+            </if>
+
+            <if test="orderId != null">
+                and order_id=#{orderId}
+            </if>
+
+            <if test="status != null">
+                and status=#{status}
+            </if>
+
+            <if test="num != null">
+                and num=#{num}
+            </if>
+
+            <if test="total != null and total != ''">
+                and total=#{total}
+            </if>
+        </where>
+    </select>
+</mapper>

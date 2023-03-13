@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.javapandeng.mapper.ItemCategoryMapper">
+    <resultMap id="ItemCategoryResultMap" type="com.javapandeng.po.ItemCategory">
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="pid" property="pid" jdbcType="INTEGER"/>
+        <result column="isDelete" property="isDelete" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--Mapper層的方法-->
+
+    <!--新增-->
+    <insert id="insert" parameterType="com.javapandeng.po.ItemCategory" useGeneratedKeys="true" keyProperty="id">
+        insert into item_category(id,name,pid,isDelete) values(#{id},#{name},#{pid},#{isDelete})
+    </insert>
+
+    <!--批量新增-->
+    <!--insert id="insertBatch" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator="," index="index">
+            insert into item_category(name,pid,isDelete) values
+            (#{item.name},#{item.pid},#{item.isDelete})
+        </foreach>
+    </insert-->
+    <select id="insertBatch" parameterType="java.util.List">
+        insert into item_category(id,name,pid,isDelete) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.name},#{item.pid},#{item.isDelete})
+        </foreach>
+    </select>
+
+    <!--根據id刪除-->
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from item_category where id=#{id}
+    </delete>
+
+    <!--根據實體類刪除-->
+    <delete id="deleteByEntity" parameterType="com.javapandeng.po.ItemCategory">
+        delete from item_category
+        <where>
+            <if test="id != null">
+                id=#{id}
+            </if>
+
+            <if test="name != null and name != ''">
+                and name=#{name}
+            </if>
+
+            <if test="pid != null">
+                and pid=#{pid}
+            </if>
+
+            <if test="isDelete != null">
+                and isDelete=#{isDelete}
+            </if>
+        </where>
+    </delete>
+
+    <!--根據Map刪除-->
+    <delete id="deleteByMap" parameterType="java.util.HashMap">
+        delete from item_category
+        <where>
+            <if test="id != null">
+                id=#{id}
+            </if>
+
+            <if test="name != null and name != ''">
+                and name=#{name}
+            </if>
+
+            <if test="pid != null">
+                and pid=#{pid}
+            </if>
+
+            <if test="isDelete != null">
+                and isDelete=#{isDelete}
+            </if>
+        </where>
+    </delete>
+
+    <!--根據實體類修改-->
+    <update id="update" parameterType="com.javapandeng.po.ItemCategory">
+        update item_category
+        <set>
+            <if test="name != null and name != ''">
+                name=#{name},
+            </if>
+
+            <if test="pid != null">
+                pid=#{pid},
+            </if>
+
+            <if test="isDelete != null">
+                isDelete=#{isDelete}
+            </if>
+        </set>
+        <where>
+            <if test="id != null">
+                id=#{id}
+            </if>
+
+            <if test="name != null and name != ''">
+                and name=#{name}
+            </if>
+
+            <if test="pid != null">
+                and pid=#{pid}
+            </if>
+
+            <if test="isDelete != null">
+                and isDelete=#{isDelete}
+            </if>
+        </where>
+    </update>
+
+    <!--根據id修改-->
+    <update id="updateById" parameterType="com.javapandeng.po.ItemCategory">
+        update item_category
+        <set>
+            <if test="name != null and name != ''">
+                name=#{name},
+            </if>
+
+            <if test="pid != null">
+                pid=#{pid},
+            </if>
+
+            <if test="isDelete != null">
+                isDelete=#{isDelete}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+    
+    <!--批量修改-->
+    <update id="updateBatch" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";" index="index">
+            update item_category
+            <set>
+                <if test="item.name != null and item.name != ''">
+                    name=#{item.name},
+                </if>
+
+                <if test="item.pid != null">
+                    pid=#{item.pid},
+                </if>
+
+                <if test="item.isDelete != null">
+                    isDelete=#{item.isDelete}
+                </if>
+            </set>
+            where id=#{item.id}
+        </foreach>
+    </update>
+
+    <!--根據Map查詢-->
+    <select id="listByMap" parameterType="map" resultMap="ItemCategoryResultMap">
+        select * from item_category
+        <where>
+            <if test="id != null">
+                id=#{id}
+            </if>
+
+            <if test="name != null and name != ''">
+                and name=#{name}
+            </if>
+
+            <if test="pid != null">
+                and pid=#{pid}
+            </if>
+
+            <if test="isDelete != null">
+                and isDelete=#{isDelete}
+            </if>
+        </where>
+    </select>
+
+    <!--查詢全部-->
+    <select id="listAll" resultMap="ItemCategoryResultMap">
+        select * from item_category
+    </select>
+
+    <!--查詢(根據屬性值為判斷條件)-->
+    <select id="listAllByEntity" parameterType="com.javapandeng.po.ItemCategory" resultMap="ItemCategoryResultMap">
+        select * from item_category
+        <where>
+            <if test="id != null">
+                id=#{id}
+            </if>
+
+            <if test="name != null and name != ''">
+                and name=#{name}
+            </if>
+
+            <if test="pid != null">
+                and pid=#{pid}
+            </if>
+
+            <if test="isDelete != null">
+                and isDelete=#{isDelete}
+            </if>
+        </where>
+    </select>
+
+    <!--根據id獲取一個實體-->
+    <select id="getById" resultMap="ItemCategoryResultMap" parameterType="java.lang.Integer">
+        select * from item_category where id=#{id}
+    </select>
+
+    <!--根據實體類查詢-->
+    <select id="getByEntity" parameterType="com.javapandeng.po.ItemCategory" resultMap="ItemCategoryResultMap">
+        select * from item_category
+        <where>
+            <if test="id != null">
+                id=#{id}
+            </if>
+
+            <if test="name != null and name != ''">
+                and name=#{name}
+            </if>
+
+            <if test="pid != null">
+                and pid=#{pid}
+            </if>
+
+            <if test="isDelete != null">
+                and isDelete=#{isDelete}
+            </if>
+        </where>
+    </select>
+
+    <!--以下為封裝純SQL語法-->
+
+    <!--查詢一個對象返回Map-->
+    <select id="getBySqlReturnMap" resultType="map">
+        ${sql}
+    </select>
+
+    <!--查詢一個對象返回實體類-->
+    <select id="getBySqlReturnEntity" resultMap="ItemCategoryResultMap">
+        ${sql}
+    </select>
+
+    <!--查詢對象返回Map列表-->
+    <select id="listBySqlReturnMap" resultType="map">
+        ${sql}
+    </select>
+
+    <!--查詢對象返回實體列表-->
+    <select id="listBySqlReturnEntity" resultMap="ItemCategoryResultMap">
+        ${sql}
+    </select>
+
+    <!--查詢分頁-->
+    <select id="findBySqlReturnEntity" resultMap="ItemCategoryResultMap">
+        ${sql}
+    </select>
+
+    <!--通過SQL修改-->
+    <update id="updateBySql">
+        ${sql}
+    </update>
+
+    <!--通過SQL刪除-->
+    <delete id="deleteBySql">
+        ${sql}
+    </delete>
+
+    <!--Service層特有的方法-->
+
+    <!--通過Map查詢分頁-->
+    <select id="findByMap" parameterType="map" resultMap="ItemCategoryResultMap">
+        select * from item_category
+        <where>
+            <if test="id != null">
+                id=#{id}
+            </if>
+
+            <if test="name != null and name != ''">
+                and name=#{name}
+            </if>
+
+            <if test="pid != null">
+                and pid=#{pid}
+            </if>
+
+            <if test="isDelete != null">
+                and isDelete=#{isDelete}
+            </if>
+        </where>
+    </select>
+
+    <!--通過對象查詢分頁-->
+    <select id="findByEntity" parameterType="com.javapandeng.po.ItemCategory" resultMap="ItemCategoryResultMap">
+        select * from item_category
+        <where>
+            <if test="id != null">
+                id=#{id}
+            </if>
+
+            <if test="name != null and name != ''">
+                and name=#{name}
+            </if>
+
+            <if test="pid != null">
+                and pid=#{pid}
+            </if>
+
+            <if test="isDelete != null">
+                and isDelete=#{isDelete}
+            </if>
+        </where>
+    </select>
+</mapper>

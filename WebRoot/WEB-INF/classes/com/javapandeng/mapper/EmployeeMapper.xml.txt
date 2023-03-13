@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.javapandeng.mapper.EmployeeMapper">
+    <resultMap id="EmployeeResultMap" type="com.javapandeng.po.Employee">
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="realName" property="realName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--Mapper層的方法-->
+
+    <!--新增-->
+    <insert id="insert" parameterType="com.javapandeng.po.Employee" useGeneratedKeys="true" keyProperty="id">
+        insert into employee(username,password,realName) values(#{username},#{password},#{realName})
+    </insert>
+
+    <!--批量新增-->
+    <insert id="insertBatch" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator="," index="index">
+            insert into employee(username,password,realName) values
+            (#{item.username},#{item.password},#{item.realName})
+        </foreach>
+    </insert>
+
+    <!--根據id刪除-->
+    <delete id="deleteById">
+        delete from employee where id=#{id}
+    </delete>
+
+    <!--根據實體類刪除-->
+    <delete id="deleteByEntity" parameterType="com.javapandeng.po.Employee">
+        delete from employee
+        <where>
+            <if test="id != null">
+                id=#{id}
+            </if>
+
+            <if test="username != null and username != ''">
+                and username=#{username}
+            </if>
+
+            <if test="password != null and password != ''">
+                and password=#{password}
+            </if>
+
+            <if test="realName != null and realName != ''">
+                and realName=#{realName}
+            </if>
+        </where>
+    </delete>
+
+    <!--根據Map刪除-->
+    <delete id="deleteByMap" parameterType="java.util.HashMap">
+        delete from employee
+        <where>
+            <if test="id != null">
+                id=#{id}
+            </if>
+
+            <if test="username != null and username != ''">
+                and username=#{username}
+            </if>
+
+            <if test="password != null and password != ''">
+                and password=#{password}
+            </if>
+
+            <if test="realName != null and realName != ''">
+                and realName=#{realName}
+            </if>
+        </where>
+    </delete>
+
+    <!--根據實體類修改-->
+    <update id="update" parameterType="com.javapandeng.po.Employee">
+        update employee
+        <set>
+            <if test="username != null and username != ''">
+                username=#{username}
+            </if>
+
+            <if test="password != null and password != ''">
+                password=#{password}
+            </if>
+
+            <if test="realName != null and realName != ''">
+                realName=#{realName}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <!--根據id修改-->
+    <update id="updateById">
+        update employee
+        <set>
+            <if test="username != null and username != ''">
+                username=#{username}
+            </if>
+
+            <if test="password != null and password != ''">
+                password=#{password}
+            </if>
+
+            <if test="realName != null and realName != ''">
+                realName=#{realName}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+    
+    <!--批量修改-->
+    <update id="updateBatch" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator="," index="index">
+            update employee
+            <set>
+                <if test="item.username != null and item.username != ''">
+                    username=#{item.username}
+                </if>
+
+                <if test="item.password != null and item.password != ''">
+                    password=#{item.password}
+                </if>
+
+                <if test="item.realName != null and item.realName != ''">
+                    realName=#{item.realName}
+                </if>
+            </set>
+            where id=#{item.id}
+        </foreach>
+    </update>
+
+    <!--根據Map查詢-->
+    <select id="listByMap" parameterType="java.util.HashMap" resultMap="EmployeeResultMap">
+        select * from employee
+        <where>
+            <if test="id != null">
+                id=#{id}
+            </if>
+
+            <if test="username != null and username != ''">
+                and username=#{username}
+            </if>
+
+            <if test="password != null and password != ''">
+                and password=#{password}
+            </if>
+
+            <if test="realName != null and realName != ''">
+                and realName=#{realName}
+            </if>
+        </where>
+    </select>
+
+    <!--查詢全部-->
+    <select id="listAll" resultMap="EmployeeResultMap">
+        select * from employee
+    </select>
+
+    <!--查詢(根據屬性值為判斷條件)-->
+    <select id="listAllByEntity" parameterType="com.javapandeng.po.Employee" resultMap="EmployeeResultMap">
+        select * from employee
+        <where>
+        </where>
+    </select>
+
+    <!--根據id獲取一個實體-->
+    <select id="getById" resultMap="EmployeeResultMap">
+        select * from employee where id=#{id}
+    </select>
+
+    <!--根據實體類查詢-->
+    <select id="getByEntity" parameterType="com.javapandeng.po.Employee" resultMap="EmployeeResultMap">
+        select * from employee
+        <where>
+        </where>
+    </select>
+
+    <!--以下為封裝純SQL語法-->
+
+    <!--查詢一個對象返回Map-->
+    <select id="getBySqlReturnMap">
+        ${sql}
+    </select>
+
+    <!--查詢一個對象返回實體類-->
+    <select id="getBySqlReturnEntity" resultMap="EmployeeResultMap">
+        ${sql}
+    </select>
+
+    <!--查詢對象返回Map列表-->
+    <select id="listBySqlReturnMap">
+        ${sql}
+    </select>
+
+    <!--查詢對象返回實體列表-->
+    <select id="listBySqlReturnEntity">
+        ${sql}
+    </select>
+
+    <!--查詢分頁-->
+    <select id="findBySqlReturnEntity">
+        ${sql}
+    </select>
+
+    <!--通過SQL修改-->
+    <select id="updateBySql">
+        ${sql}
+    </select>
+
+    <!--通過SQL刪除-->
+    <select id="deleteBySql">
+        ${sql}
+    </select>
+
+    <!--Service層特有的方法-->
+
+    <!--通過Map查詢分頁-->
+    <select id="findByMap" parameterType="java.util.HashMap" resultMap="EmployeeResultMap">
+
+    </select>
+
+    <!--通過對象查詢分頁-->
+    <select id="findByEntity" parameterType="com.javapandeng.po.Employee" resultMap="EmployeeResultMap">
+
+    </select>
+</mapper>

@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="fruitshop:war exploded">
+    <output-path>$PROJECT_DIR$/WebRoot</output-path>
+    <root id="root" />
+  </artifact>
+</component>

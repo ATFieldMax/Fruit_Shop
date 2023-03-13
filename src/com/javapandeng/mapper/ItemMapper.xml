@@ -1,0 +1,1124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.javapandeng.mapper.ItemMapper">
+    <resultMap id="ItemResultMap" type="com.javapandeng.po.Item">
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="price" property="price" jdbcType="VARCHAR"/>
+        <result column="scNum" property="scNum" jdbcType="INTEGER"/>
+        <result column="gmNum" property="gmNum" jdbcType="INTEGER"/>
+        <result column="url1" property="url1" jdbcType="VARCHAR"/>
+        <result column="url2" property="url2" jdbcType="VARCHAR"/>
+        <result column="url3" property="url3" jdbcType="VARCHAR"/>
+        <result column="url4" property="url4" jdbcType="VARCHAR"/>
+        <result column="url5" property="url5" jdbcType="VARCHAR"/>
+        <result column="ms" property="ms" jdbcType="VARCHAR"/>
+        <result column="pam1" property="pam1" jdbcType="VARCHAR"/>
+        <result column="pam2" property="pam2" jdbcType="VARCHAR"/>
+        <result column="pam3" property="pam3" jdbcType="VARCHAR"/>
+        <result column="val3" property="val3" jdbcType="VARCHAR"/>
+        <result column="val2" property="val2" jdbcType="VARCHAR"/>
+        <result column="val1" property="val1" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="INTEGER"/>
+        <result column="zk" property="zk" jdbcType="INTEGER"/>
+        <result column="category_id_one" property="categoryIdOne" jdbcType="INTEGER"/>
+        <result column="category_id_two" property="categoryIdTwo" jdbcType="INTEGER"/>
+        <result column="isDelete" property="isDelete" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--Mapper層的方法-->
+
+    <!--新增-->
+    <insert id="insert" parameterType="com.javapandeng.po.Item" useGeneratedKeys="true" keyProperty="id">
+        insert into item(id,name,price,scNum,gmNum,url1,url2,url3,url4,url5,ms,pam1,pam2,pam3,val3,val2,val1,type,zk,category_id_one,category_id_two,isDelete) values
+        (#{id},#{name},#{price},#{scNum},#{gmNum},#{url1},#{url2},#{url3},#{url4},#{url5},#{ms},#{pam1},#{pam2},#{pam3},
+         #{val3},#{val2},#{val1},#{type},#{zk},#{categoryIdOne},#{categoryIdTwo},#{isDelete})
+    </insert>
+
+    <!--批量新增-->
+    <select id="insertBatch" parameterType="java.util.List">
+        insert into item(id,name,price,scNum,gmNum,url1,url2,url3,url4,url5,ms,pam1,pam2,pam3,val3,val2,val1,type,zk,category_id_one,category_id_two,isDelete) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.name},#{item.price},#{item.scNum},#{item.gmNum},#{item.url1},#{item.url2},#{item.url3},#{item.url4},#{item.url5},
+             #{item.ms},#{item.pam1},#{item.pam2},#{item.pam3},#{item.val3},#{item.val2},#{item.val1},#{item.type},#{item.zk},
+             #{item.categoryIdOne},#{item.categoryIdTwo},#{item.isDelete})
+        </foreach>
+    </select>
+
+    <!--根據id刪除-->
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from item where id=#{id}
+    </delete>
+
+    <!--根據實體類刪除-->
+    <delete id="deleteByEntity" parameterType="com.javapandeng.po.Item">
+        delete from item
+        <where>
+            <if test="id != null">
+                id=#{id}
+            </if>
+
+            <if test="name != null and name != ''">
+                and name=#{name}
+            </if>
+
+            <if test="price != null and price != ''">
+                and price=#{price}
+            </if>
+
+            <if test="scNum != null">
+                and scNum=#{scNum}
+            </if>
+
+            <if test="gmNum != null">
+                and gmNum=#{gmNum}
+            </if>
+
+            <if test="url1 != null and url1 != ''">
+                and url1=#{url1}
+            </if>
+
+            <if test="url2 != null and url2 != ''">
+                and url2=#{url2}
+            </if>
+
+            <if test="url3 != null and url3 != ''">
+                and url3=#{url3}
+            </if>
+
+            <if test="url4 != null and url4 != ''">
+                and url4=#{url4}
+            </if>
+
+            <if test="url5 != null and url5 != ''">
+                and url5=#{url5}
+            </if>
+
+            <if test="ms != null and ms != ''">
+                and ms=#{ms}
+            </if>
+
+            <if test="pam1 != null and pam1 != ''">
+                and pam1=#{pam1}
+            </if>
+
+            <if test="pam2 != null and pam2 != ''">
+                and pam2=#{pam2}
+            </if>
+
+            <if test="pam3 != null and pam3 != ''">
+                and pam3=#{pam3}
+            </if>
+
+            <if test="val3 != null and val3 != ''">
+                and val3=#{val3}
+            </if>
+
+            <if test="val2 != null and val2 != ''">
+                and val2=#{val2}
+            </if>
+
+            <if test="val1 != null and val1 != ''">
+                and val1=#{val1}
+            </if>
+
+            <if test="type != null">
+                and type=#{type}
+            </if>
+
+            <if test="zk != null">
+                and zk=#{zk}
+            </if>
+
+            <if test="categoryIdOne != null">
+                and category_id_one=#{categoryIdOne}
+            </if>
+
+            <if test="categoryIdTwo != null">
+                and category_id_two=#{categoryIdTwo}
+            </if>
+
+            <if test="isDelete != null">
+                and isDelete=#{isDelete}
+            </if>
+        </where>
+    </delete>
+
+    <!--根據Map刪除-->
+    <delete id="deleteByMap" parameterType="java.util.HashMap">
+        delete from item
+        <where>
+            <if test="id != null">
+                id=#{id}
+            </if>
+
+            <if test="name != null and name != ''">
+                and name=#{name}
+            </if>
+
+            <if test="price != null and price != ''">
+                and price=#{price}
+            </if>
+
+            <if test="scNum != null">
+                and scNum=#{scNum}
+            </if>
+
+            <if test="gmNum != null">
+                and gmNum=#{gmNum}
+            </if>
+
+            <if test="url1 != null and url1 != ''">
+                and url1=#{url1}
+            </if>
+
+            <if test="url2 != null and url2 != ''">
+                and url2=#{url2}
+            </if>
+
+            <if test="url3 != null and url3 != ''">
+                and url3=#{url3}
+            </if>
+
+            <if test="url4 != null and url4 != ''">
+                and url4=#{url4}
+            </if>
+
+            <if test="url5 != null and url5 != ''">
+                and url5=#{url5}
+            </if>
+
+            <if test="ms != null and ms != ''">
+                and ms=#{ms}
+            </if>
+
+            <if test="pam1 != null and pam1 != ''">
+                and pam1=#{pam1}
+            </if>
+
+            <if test="pam2 != null and pam2 != ''">
+                and pam2=#{pam2}
+            </if>
+
+            <if test="pam3 != null and pam3 != ''">
+                and pam3=#{pam3}
+            </if>
+
+            <if test="val3 != null and val3 != ''">
+                and val3=#{val3}
+            </if>
+
+            <if test="val2 != null and val2 != ''">
+                and val2=#{val2}
+            </if>
+
+            <if test="val1 != null and val1 != ''">
+                and val1=#{val1}
+            </if>
+
+            <if test="type != null">
+                and type=#{type}
+            </if>
+
+            <if test="zk != null">
+                and zk=#{zk}
+            </if>
+
+            <if test="categoryIdOne != null">
+                and category_id_one=#{categoryIdOne}
+            </if>
+
+            <if test="categoryIdTwo != null">
+                and category_id_two=#{categoryIdTwo}
+            </if>
+
+            <if test="isDelete != null">
+                and isDelete=#{isDelete}
+            </if>
+        </where>
+    </delete>
+
+    <!--根據實體類修改-->
+    <update id="update" parameterType="com.javapandeng.po.Item">
+        update item
+        <set>
+            <if test="name != null and name != ''">
+                name=#{name},
+            </if>
+
+            <if test="price != null and price != ''">
+                price=#{price},
+            </if>
+
+            <if test="scNum != null">
+                scNum=#{scNum},
+            </if>
+
+            <if test="gmNum != null">
+                gmNum=#{gmNum},
+            </if>
+
+            <if test="url1 != null and url1 != ''">
+                url1=#{url1},
+            </if>
+
+            <if test="url2 != null and url2 != ''">
+                url2=#{url2},
+            </if>
+
+            <if test="url3 != null and url3 != ''">
+                url3=#{url3},
+            </if>
+
+            <if test="url4 != null and url4 != ''">
+                url4=#{url4},
+            </if>
+
+            <if test="url5 != null and url5 != ''">
+                url5=#{url5},
+            </if>
+
+            <if test="ms != null and ms != ''">
+                ms=#{ms},
+            </if>
+
+            <if test="pam1 != null and pam1 != ''">
+                pam1=#{pam1},
+            </if>
+
+            <if test="pam2 != null and pam2 != ''">
+                pam2=#{pam2},
+            </if>
+
+            <if test="pam3 != null and pam3 != ''">
+                pam3=#{pam3},
+            </if>
+
+            <if test="val3 != null and val3 != ''">
+                val3=#{val3},
+            </if>
+
+            <if test="val2 != null and val2 != ''">
+                val2=#{val2},
+            </if>
+
+            <if test="val1 != null and val1 != ''">
+                val1=#{val1},
+            </if>
+
+            <if test="type != null">
+                type=#{type},
+            </if>
+
+            <if test="zk != null">
+                zk=#{zk},
+            </if>
+
+            <if test="categoryIdOne != null">
+                category_id_one=#{categoryIdOne},
+            </if>
+
+            <if test="categoryIdTwo != null">
+                category_id_two=#{categoryIdTwo},
+            </if>
+
+            <if test="isDelete != null">
+                isDelete=#{isDelete}
+            </if>
+        </set>
+        <where>
+            <if test="id != null">
+                id=#{id}
+            </if>
+
+            <if test="name != null and name != ''">
+                and name=#{name}
+            </if>
+
+            <if test="price != null and price != ''">
+                and price=#{price}
+            </if>
+
+            <if test="scNum != null">
+                and scNum=#{scNum}
+            </if>
+
+            <if test="gmNum != null">
+                and gmNum=#{gmNum}
+            </if>
+
+            <if test="url1 != null and url1 != ''">
+                and url1=#{url1}
+            </if>
+
+            <if test="url2 != null and url2 != ''">
+                and url2=#{url2}
+            </if>
+
+            <if test="url3 != null and url3 != ''">
+                and url3=#{url3}
+            </if>
+
+            <if test="url4 != null and url4 != ''">
+                and url4=#{url4}
+            </if>
+
+            <if test="url5 != null and url5 != ''">
+                and url5=#{url5}
+            </if>
+
+            <if test="ms != null and ms != ''">
+                and ms=#{ms}
+            </if>
+
+            <if test="pam1 != null and pam1 != ''">
+                and pam1=#{pam1}
+            </if>
+
+            <if test="pam2 != null and pam2 != ''">
+                and pam2=#{pam2}
+            </if>
+
+            <if test="pam3 != null and pam3 != ''">
+                and pam3=#{pam3}
+            </if>
+
+            <if test="val3 != null and val3 != ''">
+                and val3=#{val3}
+            </if>
+
+            <if test="val2 != null and val2 != ''">
+                and val2=#{val2}
+            </if>
+
+            <if test="val1 != null and val1 != ''">
+                and val1=#{val1}
+            </if>
+
+            <if test="type != null">
+                and type=#{type}
+            </if>
+
+            <if test="zk != null">
+                and zk=#{zk}
+            </if>
+
+            <if test="categoryIdOne != null">
+                and category_id_one=#{categoryIdOne}
+            </if>
+
+            <if test="categoryIdTwo != null">
+                and category_id_two=#{categoryIdTwo}
+            </if>
+
+            <if test="isDelete != null">
+                and isDelete=#{isDelete}
+            </if>
+        </where>
+    </update>
+
+    <!--根據id修改-->
+    <update id="updateById" parameterType="com.javapandeng.po.Item">
+        update item
+        <set>
+            <if test="name != null and name != ''">
+                name=#{name},
+            </if>
+
+            <if test="price != null and price != ''">
+                price=#{price},
+            </if>
+
+            <if test="scNum != null">
+                scNum=#{scNum},
+            </if>
+
+            <if test="gmNum != null">
+                gmNum=#{gmNum},
+            </if>
+
+            <if test="url1 != null and url1 != ''">
+                url1=#{url1},
+            </if>
+
+            <if test="url2 != null and url2 != ''">
+                url2=#{url2},
+            </if>
+
+            <if test="url3 != null and url3 != ''">
+                url3=#{url3},
+            </if>
+
+            <if test="url4 != null and url4 != ''">
+                url4=#{url4},
+            </if>
+
+            <if test="url5 != null and url5 != ''">
+                url5=#{url5},
+            </if>
+
+            <if test="ms != null and ms != ''">
+                ms=#{ms},
+            </if>
+
+            <if test="pam1 != null and pam1 != ''">
+                pam1=#{pam1},
+            </if>
+
+            <if test="pam2 != null and pam2 != ''">
+                pam2=#{pam2},
+            </if>
+
+            <if test="pam3 != null and pam3 != ''">
+                pam3=#{pam3},
+            </if>
+
+            <if test="val3 != null and val3 != ''">
+                val3=#{val3},
+            </if>
+
+            <if test="val2 != null and val2 != ''">
+                val2=#{val2},
+            </if>
+
+            <if test="val1 != null and val1 != ''">
+                val1=#{val1},
+            </if>
+
+            <if test="type != null">
+                type=#{type},
+            </if>
+
+            <if test="zk != null">
+                zk=#{zk},
+            </if>
+
+            <if test="categoryIdOne != null">
+                category_id_one=#{categoryIdOne},
+            </if>
+
+            <if test="categoryIdTwo != null">
+                category_id_two=#{categoryIdTwo},
+            </if>
+
+            <if test="isDelete != null">
+                isDelete=#{isDelete}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+    
+    <!--批量修改-->
+    <update id="updateBatch" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";" index="index">
+            update item
+            <set>
+                <if test="item.name != null and item.name != ''">
+                    name=#{item.name},
+                </if>
+
+                <if test="item.price != null and item.price != ''">
+                    price=#{item.price},
+                </if>
+
+                <if test="item.scNum != null">
+                    scNum=#{item.scNum},
+                </if>
+
+                <if test="item.gmNum != null">
+                    gmNum=#{item.gmNum},
+                </if>
+
+                <if test="item.url1 != null and item.url1 != ''">
+                    url1=#{item.url1},
+                </if>
+
+                <if test="item.url2 != null and item.url2 != ''">
+                    url2=#{item.url2},
+                </if>
+
+                <if test="item.url3 != null and item.url3 != ''">
+                    url3=#{item.url3},
+                </if>
+
+                <if test="item.url4 != null and item.url4 != ''">
+                    url4=#{item.url4},
+                </if>
+
+                <if test="item.url5 != null and item.url5 != ''">
+                    url5=#{item.url5},
+                </if>
+
+                <if test="item.ms != null and item.ms != ''">
+                    ms=#{item.ms},
+                </if>
+
+                <if test="item.pam1 != null and item.pam1 != ''">
+                    pam1=#{item.pam1},
+                </if>
+
+                <if test="item.pam2 != null and item.pam2 != ''">
+                    pam2=#{item.pam2},
+                </if>
+
+                <if test="item.pam3 != null and item.pam3 != ''">
+                    pam3=#{item.pam3},
+                </if>
+
+                <if test="item.val3 != null and item.val3 != ''">
+                    val3=#{item.val3},
+                </if>
+
+                <if test="item.val2 != null and item.val2 != ''">
+                    val2=#{item.val2},
+                </if>
+
+                <if test="item.val1 != null and item.val1 != ''">
+                    val1=#{item.val1},
+                </if>
+
+                <if test="item.type != null">
+                    type=#{item.type},
+                </if>
+
+                <if test="item.zk != null">
+                    zk=#{item.zk},
+                </if>
+
+                <if test="item.categoryIdOne != null">
+                    category_id_one=#{item.categoryIdOne},
+                </if>
+
+                <if test="item.categoryIdTwo != null">
+                    category_id_two=#{item.categoryIdTwo},
+                </if>
+
+                <if test="item.isDelete != null">
+                    isDelete=#{item.isDelete}
+                </if>
+            </set>
+            where id=#{item.id}
+        </foreach>
+    </update>
+
+    <!--根據Map查詢-->
+    <select id="listByMap" parameterType="map" resultMap="ItemResultMap">
+        select * from item
+        <where>
+            <if test="id != null">
+                id=#{id}
+            </if>
+
+            <if test="name != null and name != ''">
+                and name=#{name}
+            </if>
+
+            <if test="price != null and price != ''">
+                and price=#{price}
+            </if>
+
+            <if test="scNum != null">
+                and scNum=#{scNum}
+            </if>
+
+            <if test="gmNum != null">
+                and gmNum=#{gmNum}
+            </if>
+
+            <if test="url1 != null and url1 != ''">
+                and url1=#{url1}
+            </if>
+
+            <if test="url2 != null and url2 != ''">
+                and url2=#{url2}
+            </if>
+
+            <if test="url3 != null and url3 != ''">
+                and url3=#{url3}
+            </if>
+
+            <if test="url4 != null and url4 != ''">
+                and url4=#{url4}
+            </if>
+
+            <if test="url5 != null and url5 != ''">
+                and url5=#{url5}
+            </if>
+
+            <if test="ms != null and ms != ''">
+                and ms=#{ms}
+            </if>
+
+            <if test="pam1 != null and pam1 != ''">
+                and pam1=#{pam1}
+            </if>
+
+            <if test="pam2 != null and pam2 != ''">
+                and pam2=#{pam2}
+            </if>
+
+            <if test="pam3 != null and pam3 != ''">
+                and pam3=#{pam3}
+            </if>
+
+            <if test="val3 != null and val3 != ''">
+                and val3=#{val3}
+            </if>
+
+            <if test="val2 != null and val2 != ''">
+                and val2=#{val2}
+            </if>
+
+            <if test="val1 != null and val1 != ''">
+                and val1=#{val1}
+            </if>
+
+            <if test="type != null">
+                and type=#{type}
+            </if>
+
+            <if test="zk != null">
+                and zk=#{zk}
+            </if>
+
+            <if test="categoryIdOne != null">
+                and category_id_one=#{categoryIdOne}
+            </if>
+
+            <if test="categoryIdTwo != null">
+                and category_id_two=#{categoryIdTwo}
+            </if>
+
+            <if test="isDelete != null">
+                and isDelete=#{isDelete}
+            </if>
+        </where>
+    </select>
+
+    <!--查詢全部-->
+    <select id="listAll" resultMap="ItemResultMap">
+        select * from item
+    </select>
+
+    <!--查詢(根據屬性值為判斷條件)-->
+    <select id="listAllByEntity" parameterType="com.javapandeng.po.Item" resultMap="ItemResultMap">
+        select * from item
+        <where>
+            <if test="id != null">
+                id=#{id}
+            </if>
+
+            <if test="name != null and name != ''">
+                and name=#{name}
+            </if>
+
+            <if test="price != null and price != ''">
+                and price=#{price}
+            </if>
+
+            <if test="scNum != null">
+                and scNum=#{scNum}
+            </if>
+
+            <if test="gmNum != null">
+                and gmNum=#{gmNum}
+            </if>
+
+            <if test="url1 != null and url1 != ''">
+                and url1=#{url1}
+            </if>
+
+            <if test="url2 != null and url2 != ''">
+                and url2=#{url2}
+            </if>
+
+            <if test="url3 != null and url3 != ''">
+                and url3=#{url3}
+            </if>
+
+            <if test="url4 != null and url4 != ''">
+                and url4=#{url4}
+            </if>
+
+            <if test="url5 != null and url5 != ''">
+                and url5=#{url5}
+            </if>
+
+            <if test="ms != null and ms != ''">
+                and ms=#{ms}
+            </if>
+
+            <if test="pam1 != null and pam1 != ''">
+                and pam1=#{pam1}
+            </if>
+
+            <if test="pam2 != null and pam2 != ''">
+                and pam2=#{pam2}
+            </if>
+
+            <if test="pam3 != null and pam3 != ''">
+                and pam3=#{pam3}
+            </if>
+
+            <if test="val3 != null and val3 != ''">
+                and val3=#{val3}
+            </if>
+
+            <if test="val2 != null and val2 != ''">
+                and val2=#{val2}
+            </if>
+
+            <if test="val1 != null and val1 != ''">
+                and val1=#{val1}
+            </if>
+
+            <if test="type != null">
+                and type=#{type}
+            </if>
+
+            <if test="zk != null">
+                and zk=#{zk}
+            </if>
+
+            <if test="categoryIdOne != null">
+                and category_id_one=#{categoryIdOne}
+            </if>
+
+            <if test="categoryIdTwo != null">
+                and category_id_two=#{categoryIdTwo}
+            </if>
+
+            <if test="isDelete != null">
+                and isDelete=#{isDelete}
+            </if>
+        </where>
+    </select>
+
+    <!--根據id獲取一個實體-->
+    <select id="getById" resultMap="ItemResultMap" parameterType="java.lang.Integer">
+        select * from item where id=#{id}
+    </select>
+
+    <!--根據實體類查詢-->
+    <select id="getByEntity" parameterType="com.javapandeng.po.Item" resultMap="ItemResultMap">
+        select * from item
+        <where>
+            <if test="id != null">
+                id=#{id}
+            </if>
+
+            <if test="name != null and name != ''">
+                and name=#{name}
+            </if>
+
+            <if test="price != null and price != ''">
+                and price=#{price}
+            </if>
+
+            <if test="scNum != null">
+                and scNum=#{scNum}
+            </if>
+
+            <if test="gmNum != null">
+                and gmNum=#{gmNum}
+            </if>
+
+            <if test="url1 != null and url1 != ''">
+                and url1=#{url1}
+            </if>
+
+            <if test="url2 != null and url2 != ''">
+                and url2=#{url2}
+            </if>
+
+            <if test="url3 != null and url3 != ''">
+                and url3=#{url3}
+            </if>
+
+            <if test="url4 != null and url4 != ''">
+                and url4=#{url4}
+            </if>
+
+            <if test="url5 != null and url5 != ''">
+                and url5=#{url5}
+            </if>
+
+            <if test="ms != null and ms != ''">
+                and ms=#{ms}
+            </if>
+
+            <if test="pam1 != null and pam1 != ''">
+                and pam1=#{pam1}
+            </if>
+
+            <if test="pam2 != null and pam2 != ''">
+                and pam2=#{pam2}
+            </if>
+
+            <if test="pam3 != null and pam3 != ''">
+                and pam3=#{pam3}
+            </if>
+
+            <if test="val3 != null and val3 != ''">
+                and val3=#{val3}
+            </if>
+
+            <if test="val2 != null and val2 != ''">
+                and val2=#{val2}
+            </if>
+
+            <if test="val1 != null and val1 != ''">
+                and val1=#{val1}
+            </if>
+
+            <if test="type != null">
+                and type=#{type}
+            </if>
+
+            <if test="zk != null">
+                and zk=#{zk}
+            </if>
+
+            <if test="categoryIdOne != null">
+                and category_id_one=#{categoryIdOne}
+            </if>
+
+            <if test="categoryIdTwo != null">
+                and category_id_two=#{categoryIdTwo}
+            </if>
+
+            <if test="isDelete != null">
+                and isDelete=#{isDelete}
+            </if>
+        </where>
+    </select>
+
+    <!--以下為封裝純SQL語法-->
+
+    <!--查詢一個對象返回Map-->
+    <select id="getBySqlReturnMap" resultType="map">
+        ${sql}
+    </select>
+
+    <!--查詢一個對象返回實體類-->
+    <select id="getBySqlReturnEntity" resultMap="ItemResultMap">
+        ${sql}
+    </select>
+
+    <!--查詢對象返回Map列表-->
+    <select id="listBySqlReturnMap" resultType="map">
+        ${sql}
+    </select>
+
+    <!--查詢對象返回實體列表-->
+    <select id="listBySqlReturnEntity" resultMap="ItemResultMap">
+        ${sql}
+    </select>
+
+    <!--查詢分頁-->
+    <select id="findBySqlReturnEntity" resultMap="ItemResultMap">
+        ${sql}
+    </select>
+
+    <!--通過SQL修改-->
+    <update id="updateBySql">
+        ${sql}
+    </update>
+
+    <!--通過SQL刪除-->
+    <delete id="deleteBySql">
+        ${sql}
+    </delete>
+
+    <!--Service層特有的方法-->
+
+    <!--通過Map查詢分頁-->
+    <select id="findByMap" parameterType="map" resultMap="ItemResultMap">
+        select * from item
+        <where>
+            <if test="id != null">
+                id=#{id}
+            </if>
+
+            <if test="name != null and name != ''">
+                and name=#{name}
+            </if>
+
+            <if test="price != null and price != ''">
+                and price=#{price}
+            </if>
+
+            <if test="scNum != null">
+                and scNum=#{scNum}
+            </if>
+
+            <if test="gmNum != null">
+                and gmNum=#{gmNum}
+            </if>
+
+            <if test="url1 != null and url1 != ''">
+                and url1=#{url1}
+            </if>
+
+            <if test="url2 != null and url2 != ''">
+                and url2=#{url2}
+            </if>
+
+            <if test="url3 != null and url3 != ''">
+                and url3=#{url3}
+            </if>
+
+            <if test="url4 != null and url4 != ''">
+                and url4=#{url4}
+            </if>
+
+            <if test="url5 != null and url5 != ''">
+                and url5=#{url5}
+            </if>
+
+            <if test="ms != null and ms != ''">
+                and ms=#{ms}
+            </if>
+
+            <if test="pam1 != null and pam1 != ''">
+                and pam1=#{pam1}
+            </if>
+
+            <if test="pam2 != null and pam2 != ''">
+                and pam2=#{pam2}
+            </if>
+
+            <if test="pam3 != null and pam3 != ''">
+                and pam3=#{pam3}
+            </if>
+
+            <if test="val3 != null and val3 != ''">
+                and val3=#{val3}
+            </if>
+
+            <if test="val2 != null and val2 != ''">
+                and val2=#{val2}
+            </if>
+
+            <if test="val1 != null and val1 != ''">
+                and val1=#{val1}
+            </if>
+
+            <if test="type != null">
+                and type=#{type}
+            </if>
+
+            <if test="zk != null">
+                and zk=#{zk}
+            </if>
+
+            <if test="categoryIdOne != null">
+                and category_id_one=#{categoryIdOne}
+            </if>
+
+            <if test="categoryIdTwo != null">
+                and category_id_two=#{categoryIdTwo}
+            </if>
+
+            <if test="isDelete != null">
+                and isDelete=#{isDelete}
+            </if>
+        </where>
+    </select>
+
+    <!--通過對象查詢分頁-->
+    <select id="findByEntity" parameterType="com.javapandeng.po.Item" resultMap="ItemResultMap">
+        select * from item
+        <where>
+            <if test="id != null">
+                id=#{id}
+            </if>
+
+            <if test="name != null and name != ''">
+                and name=#{name}
+            </if>
+
+            <if test="price != null and price != ''">
+                and price=#{price}
+            </if>
+
+            <if test="scNum != null">
+                and scNum=#{scNum}
+            </if>
+
+            <if test="gmNum != null">
+                and gmNum=#{gmNum}
+            </if>
+
+            <if test="url1 != null and url1 != ''">
+                and url1=#{url1}
+            </if>
+
+            <if test="url2 != null and url2 != ''">
+                and url2=#{url2}
+            </if>
+
+            <if test="url3 != null and url3 != ''">
+                and url3=#{url3}
+            </if>
+
+            <if test="url4 != null and url4 != ''">
+                and url4=#{url4}
+            </if>
+
+            <if test="url5 != null and url5 != ''">
+                and url5=#{url5}
+            </if>
+
+            <if test="ms != null and ms != ''">
+                and ms=#{ms}
+            </if>
+
+            <if test="pam1 != null and pam1 != ''">
+                and pam1=#{pam1}
+            </if>
+
+            <if test="pam2 != null and pam2 != ''">
+                and pam2=#{pam2}
+            </if>
+
+            <if test="pam3 != null and pam3 != ''">
+                and pam3=#{pam3}
+            </if>
+
+            <if test="val3 != null and val3 != ''">
+                and val3=#{val3}
+            </if>
+
+            <if test="val2 != null and val2 != ''">
+                and val2=#{val2}
+            </if>
+
+            <if test="val1 != null and val1 != ''">
+                and val1=#{val1}
+            </if>
+
+            <if test="type != null">
+                and type=#{type}
+            </if>
+
+            <if test="zk != null">
+                and zk=#{zk}
+            </if>
+
+            <if test="categoryIdOne != null">
+                and category_id_one=#{categoryIdOne}
+            </if>
+
+            <if test="categoryIdTwo != null">
+                and category_id_two=#{categoryIdTwo}
+            </if>
+
+            <if test="isDelete != null">
+                and isDelete=#{isDelete}
+            </if>
+        </where>
+    </select>
+</mapper>
